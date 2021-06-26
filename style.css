@@ -1,0 +1,51 @@
+#iframe {
+  /* position: relative; */
+}
+
+#canvas {
+  border:2px solid #000000;
+  z-index: 1000;
+  /* position: absolute; */
+  /* width:"600px";
+   height:"600px"; */
+}
+.img-canvas {
+  padding: 0;
+    margin: auto;
+    display: block;
+    width: 400px;
+    height: 600px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.txt {
+  margin: auto;
+    display: block;
+    width: 400px;
+    height: 1280px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 120px;
+}
+.btn {
+  width: 200px;
+  height: 80px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  font-size: 30px;
+}
+.group-btn {
+  /* text-align: center; */
+  position: fixed;
+  bottom: 0;
+  margin:auto;
+  left: 40px;
+  margin-left: -90px;
+}
