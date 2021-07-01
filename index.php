@@ -14,13 +14,15 @@
   <div id="iframe">
     <!-- <div class="wrap-canvas"> -->
       <div class="txt"></div>
+      <div class="txt-pc"></div>
     <canvas id="canvas" width="400px" height="600px" class="img-canvas"></canvas>
     <img src="./img.png" class="img-canvas">
     <!-- </div> -->
     <div class="group-btn">
-      <input type="submit" value="Tiếp theo" id="downloadbutton" class="btn" onclick="downloadImg();">
-      <input type="submit" value="Làm lại" id="clearbutton" class="btn" onclick="clearCanvas(canvas,ctx);">
-      <input type="submit" value="Tạo bộ mới" id="downloadbutton" class="btn" onclick="resetData();">
+      <input type="submit" value="Tiếp theo" id="downloadbutton" class="btn btn-next" onclick="downloadImg();">
+      <input type="submit" value="Trở lại" id="backbutton" class="btn btn-back" onclick="back();">
+      <input type="submit" value="Làm lại" id="clearbutton" class="btn btn-reset" onclick="clearCanvas(canvas,ctx);">
+      <input type="submit" value="Tạo bộ mới" id="resetbutton" class="btn btn-new" onclick="resetData();">
     </div>
   </div>
 

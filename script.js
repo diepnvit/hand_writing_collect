@@ -8,19 +8,47 @@ $(document).ready(function () {
   for (var i = 1; i < abc.length + 1; i++) {
     let obj = {};
     obj['id'] = i;
-    obj['name'] = abc[i-1];
+    obj['name'] = abc[i - 1];
     arr.push(obj)
   }
   window.obj = arr;
   console.log(window.obj);
   $('.txt')[0].innerText = obj[window.indexStr].name;
+  $('.txt-pc')[0].innerText = obj[window.indexStr].name;
+
   if (/Mobi|Android/i.test(navigator.userAgent)) {
-    
+
     $('#canvas').attr('width', '600px');
     $('#canvas').attr('height', '900px')
-    $('.img-canvas').css({'width': '600px', 'height': '900px'});
-    $('.group-btn').css({'bottom': '100px','left': '25%'});
-    
+    $('.img-canvas').css({ 'width': '600px', 'height': '900px' });
+    $('.group-btn').css({ 'bottom': '80px', 'left': '25%', 'position': 'fixed' });
+    $('.btn').css({
+      'width': '310px',
+      'height': '80px'
+    });
+    $('.txt-pc').css({'display': 'none'})
+
+  } else {
+    $('.btn-back').css({
+      'position': 'absolute',
+      'top': '35%',
+      'left': '5%'
+    });
+    $('.btn-next').css({
+      'position': 'absolute',
+      'top': '35%',
+      'right': '5%'
+    });
+    $('.btn-reset').css({
+      'position': 'absolute',
+      'top': '50%',
+      'left': '5%'
+    });
+    $('.btn-new').css({
+      'position': 'absolute',
+      'top': '50%',
+      'right': '5%'
+    });
   }
   initialize();
 });
@@ -185,18 +213,19 @@ function clearCanvas(canvas, ctx) {
 function downloadImg() {
   window.indexStr++;
   $('.txt')[0].innerText = window.obj[window.indexStr].name;
+  $('.txt-pc')[0].innerText = window.obj[window.indexStr].name;
   // var img = canvas.toDataURL("image/png"); 
-  var img = canvas.toDataURL(); 
+  var img = canvas.toDataURL();
   $.ajax({
     type: "POST",
     url: "server.php",
-    data: { 
-       imgBase64: img,
-       fileName: window.obj[window.indexStr - 1].name === '/' ? 'gach_cheo' : window.obj[window.indexStr - 1].name +'_'+window.obj[window.indexStr - 1].id,
-       userId: window.uuid
+    data: {
+      imgBase64: img,
+      fileName: window.obj[window.indexStr - 1].name === '/' ? 'gach_cheo' : window.obj[window.indexStr - 1].name + '_' + window.obj[window.indexStr - 1].id,
+      userId: window.uuid
     }
-  }).done(function(o) {
-    console.log('saved'); 
+  }).done(function (o) {
+    console.log('saved');
     // If you want the file to be visible in the browser 
     // - please modify the callback in javascript. All you
     // need is to return the url to the file, you just saved 
@@ -217,14 +246,26 @@ function downloadImg() {
   clearCanvas(canvas, ctx);
 }
 
+function back() {
+  if(window.indexStr > 0) {
+    window.indexStr--;
+  }
+  $('.txt')[0].innerText = window.obj[window.indexStr].name;
+  $('.txt-pc')[0].innerText = window.obj[window.indexStr].name;
+  // var img = canvas.toDataURL("image/png"); 
+
+  clearCanvas(canvas, ctx);
+}
+
 function resetData() {
   window.indexStr = 0;
-  $('.txt')[0].innerText = window.str[window.indexStr];
+  $('.txt')[0].innerText = window.obj[window.indexStr]['name'];
+  $('.txt-pc')[0].innerText = window.obj[window.indexStr]['name'];
   window.userId = uuidv4();
 }
 
 function uuidv4() {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
 }
