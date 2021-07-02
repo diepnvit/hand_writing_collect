@@ -26,7 +26,7 @@ $(document).ready(function () {
       'width': '310px',
       'height': '80px'
     });
-    $('.txt-pc').css({'display': 'none'})
+    $('.txt-pc').css({ 'display': 'none' })
 
   } else {
     $('.btn-back').css({
@@ -216,12 +216,25 @@ function downloadImg() {
   $('.txt-pc')[0].innerText = window.obj[window.indexStr].name;
   // var img = canvas.toDataURL("image/png"); 
   var img = canvas.toDataURL();
+  var fileNameCreate = '';
+  switch (window.obj[window.indexStr - 1].name) {
+    case '/':
+      fileNameCreate = 'gach_cheo';
+      break;
+    case ':':
+      fileNameCreate = 'hai_cham';
+      break;
+
+    default:
+      fileNameCreate = window.obj[window.indexStr - 1].name + '_' + window.obj[window.indexStr - 1].id
+      break;
+  }
   $.ajax({
     type: "POST",
     url: "server.php",
     data: {
       imgBase64: img,
-      fileName: window.obj[window.indexStr - 1].name === '/' ? 'gach_cheo' : window.obj[window.indexStr - 1].name + '_' + window.obj[window.indexStr - 1].id,
+      fileName: fileNameCreate,
       userId: window.uuid
     }
   }).done(function (o) {
@@ -247,7 +260,7 @@ function downloadImg() {
 }
 
 function back() {
-  if(window.indexStr > 0) {
+  if (window.indexStr > 0) {
     window.indexStr--;
   }
   $('.txt')[0].innerText = window.obj[window.indexStr].name;
