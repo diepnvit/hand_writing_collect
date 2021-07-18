@@ -35,9 +35,10 @@ $(document).ready(function () {
       'width': '310px',
       'height': '80px'
     });
-    $('.txt-pc').css({ 'display': 'none' })
+    $('.txt-pc').css({ 'display': 'none' });
 
   } else {
+    $('.custom-google-btn').css({ 'display': 'none' });
     $('.btn-back').css({
       'position': 'absolute',
       'top': '35%',
@@ -304,4 +305,14 @@ function uuidv4() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
+}
+
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  // console.log('Name: ' + profile.getName());
+  // console.log('Image URL: ' + profile.getImageUrl());
+  // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  window.emailLog = profile.getEmail();
+  $('.custom-google-btn').css({ 'display': 'none' });
 }

@@ -6,6 +6,9 @@
   <title>Freehand Drawing</title>
   <link rel="stylesheet" href="./style.css">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="571039068278-432k0e6km71s2qjqmskvjsvttk9f79n0.apps.googleusercontent.com">
+
 
   <script>
   window.onload = function () {
@@ -51,6 +54,7 @@
       <input type="submit" value="Tạo bộ mới" id="resetbutton" class="btn btn-new" onclick="window.emailLog ? resetData() : alert('Login, please')">
     </div>
   </div>
+  <div class="g-signin2 custom-google-btn" data-onsuccess="onSignIn"></div>
 
   <!--background-image: url('https://3.bp.blogspot.com/_jFM-Fd8NDFE/TLhmRK1h8AI/AAAAAAAAKcU/NKNPe051PbA/s1600/OldCanvas-5.jpg');-->
   <!-- partial -->
