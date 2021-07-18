@@ -1,8 +1,17 @@
 $(document).ready(function () {
+  
   window.canvas = document.getElementById("canvas");
   window.ctx = canvas.getContext("2d");
   window.indexStr = 0;
-  window.uuid = uuidv4();
+  if (localStorage.getItem('index') && localStorage.getItem('uuid')) {
+    window.indexStr = localStorage.getItem('index');
+  }
+  if (!window.localStorage.getItem('uuid')) {
+    window.uuid = uuidv4();
+    window.localStorage.setItem('uuid', window.uuid);
+  } else {
+    window.uuid = localStorage.getItem('uuid');
+  }
   const abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZĐƠƯÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝĂĨŨẢẤẦẨẪẮẰẲẴẺẼẾỀỂỄỈỎỐỒỔỖỚỜỞỠỦỨỪỬỮỲỶỸẬẶỆỘỰỴỊỢẠẸỌỤaceimnorsuvwxzbdhkltđàáâãèéêìíòóôõùúăĩũơưảấầẩẫắằẳẵẻẽếềểễỏốồổỗớờởỡủứừửữỳỷỹýạẹợụọựậặệỉịộjfgpqỵy!”%’()=,-;./0123456789&+:?@";
   let arr = [];
   for (var i = 1; i < abc.length + 1; i++) {
@@ -50,7 +59,11 @@ $(document).ready(function () {
       'right': '5%'
     });
   }
+  if(!window.emailLog) {
+    // $('#iframe').css({'pointer-events': 'none'});
+  }
   initialize();
+  
 });
 
 // works out the X, Y position of the click inside the canvas from the X, Y position on the page
@@ -211,58 +224,66 @@ function clearCanvas(canvas, ctx) {
 }
 
 function downloadImg() {
-  window.indexStr++;
-  $('.txt')[0].innerText = window.obj[window.indexStr].name;
-  $('.txt-pc')[0].innerText = window.obj[window.indexStr].name;
-  // var img = canvas.toDataURL("image/png"); 
-  var img = canvas.toDataURL();
-  var fileNameCreate = '';
-  switch (window.obj[window.indexStr - 1].name) {
-    case '/':
-      fileNameCreate = 'gach_cheo';
-      break;
-    case ':':
-      fileNameCreate = 'hai_cham';
-      break;
+  if (window.indexStr >= window.obj.length) {
+    window.indexStr = 0;
+  } else {
+    window.indexStr++;
+    $('.txt')[0].innerText = window.obj[window.indexStr].name;
+    $('.txt-pc')[0].innerText = window.obj[window.indexStr].name;
+    // var img = canvas.toDataURL("image/png"); 
+    var img = canvas.toDataURL();
+    var fileNameCreate = '';
+    switch (window.obj[window.indexStr - 1].name) {
+      case '/':
+        fileNameCreate = 'gach_cheo';
+        break;
+      case ':':
+        fileNameCreate = 'hai_cham';
+        break;
+      case '.':
+        fileNameCreate = 'cham';
 
-    default:
-      fileNameCreate = window.obj[window.indexStr - 1].name + '_' + window.obj[window.indexStr - 1].id
-      break;
-  }
-  $.ajax({
-    type: "POST",
-    url: "server.php",
-    data: {
-      imgBase64: img,
-      fileName: fileNameCreate,
-      userId: window.uuid
+      default:
+        fileNameCreate = window.obj[window.indexStr - 1].name + '_' + window.obj[window.indexStr - 1].id
+        break;
     }
-  }).done(function (o) {
-    console.log('saved');
-    // If you want the file to be visible in the browser 
-    // - please modify the callback in javascript. All you
-    // need is to return the url to the file, you just saved 
-    // and than put the image in your browser.
-  });
+    $.ajax({
+      type: "POST",
+      url: "server.php",
+      data: {
+        imgBase64: img,
+        fileName: fileNameCreate,
+        userId: window.emailLog.split('@')[0] + '_' + window.uuid
+      }
+    }).done(function (o) {
+      console.log('saved');
+      // If you want the file to be visible in the browser 
+      // - please modify the callback in javascript. All you
+      // need is to return the url to the file, you just saved 
+      // and than put the image in your browser.
+    });
 
 
 
-  // var a = $("<a>")
-  //   .attr("href", img)
-  //   .attr("download", "img.png")
-  //   .appendTo("body");
+    // var a = $("<a>")
+    //   .attr("href", img)
+    //   .attr("download", "img.png")
+    //   .appendTo("body");
 
-  // a[0].click();
+    // a[0].click();
 
-  // a.remove();
+    // a.remove();
 
-  clearCanvas(canvas, ctx);
+    clearCanvas(canvas, ctx);
+  }
+  localStorage.setItem('index', window.indexStr);
 }
 
 function back() {
   if (window.indexStr > 0) {
     window.indexStr--;
   }
+  localStorage.setItem('index', window.indexStr);
   $('.txt')[0].innerText = window.obj[window.indexStr].name;
   $('.txt-pc')[0].innerText = window.obj[window.indexStr].name;
   // var img = canvas.toDataURL("image/png"); 
@@ -272,9 +293,11 @@ function back() {
 
 function resetData() {
   window.indexStr = 0;
+  localStorage.setItem('index', window.indexStr);
   $('.txt')[0].innerText = window.obj[window.indexStr]['name'];
   $('.txt-pc')[0].innerText = window.obj[window.indexStr]['name'];
-  window.userId = uuidv4();
+  window.uuid = uuidv4();
+  window.localStorage.setItem('uuid', window.uuid);
 }
 
 function uuidv4() {

@@ -5,7 +5,33 @@
   <meta charset="UTF-8">
   <title>Freehand Drawing</title>
   <link rel="stylesheet" href="./style.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
+  <script>
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: '571039068278-432k0e6km71s2qjqmskvjsvttk9f79n0.apps.googleusercontent.com',
+      callback: handleCredentialResponse,
+      cancel_on_tap_outside: false
+    });
+    google.accounts.id.prompt();
+  }
+  function handleCredentialResponse(res) {
+    console.log(res);
+    let dataRes = parseJwt(res.credential);
+    let emailLogin = dataRes.email;
+    window.emailLog = emailLogin;
+  }
+  function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  };
+</script>
 </head>
 
 <body>
@@ -19,10 +45,10 @@
     <img src="./img.png" class="img-canvas">
     <!-- </div> -->
     <div class="group-btn">
-      <input type="submit" value="Tiếp theo" id="downloadbutton" class="btn btn-next" onclick="downloadImg();">
-      <input type="submit" value="Trở lại" id="backbutton" class="btn btn-back" onclick="back();">
-      <input type="submit" value="Làm lại" id="clearbutton" class="btn btn-reset" onclick="clearCanvas(canvas,ctx);">
-      <input type="submit" value="Tạo bộ mới" id="resetbutton" class="btn btn-new" onclick="resetData();">
+      <input type="submit" value="Tiếp theo" id="downloadbutton" class="btn btn-next" onclick="window.emailLog ? downloadImg() : alert('Login, please')">
+      <input type="submit" value="Trở lại" id="backbutton" class="btn btn-back" onclick="window.emailLog ? back()  : alert('Login, please')">
+      <input type="submit" value="Làm lại" id="clearbutton" class="btn btn-reset" onclick="window.emailLog ? clearCanvas(canvas,ctx) : alert('Login, please')">
+      <input type="submit" value="Tạo bộ mới" id="resetbutton" class="btn btn-new" onclick="window.emailLog ? resetData() : alert('Login, please')">
     </div>
   </div>
 
