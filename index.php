@@ -48,8 +48,8 @@
     <img src="./img.png" class="img-canvas">
     <!-- </div> -->
     <div class="group-btn">
-      <input type="submit" value="Tiếp theo" id="downloadbutton" class="btn btn-next" onclick="window.emailLog ? downloadImg() : alert('Login, please')">
       <input type="submit" value="Trở lại" id="backbutton" class="btn btn-back" onclick="window.emailLog ? back()  : alert('Login, please')">
+      <input type="submit" value="Tiếp theo" id="downloadbutton" class="btn btn-next" onclick="window.emailLog ? downloadImg() : alert('Login, please')">
       <input type="submit" value="Làm lại" id="clearbutton" class="btn btn-reset" onclick="window.emailLog ? clearCanvas(canvas,ctx) : alert('Login, please')">
       <input type="submit" value="Tạo bộ mới" id="resetbutton" class="btn btn-new" onclick="window.emailLog ? resetData() : alert('Login, please')">
     </div>
