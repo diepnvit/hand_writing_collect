@@ -53,8 +53,8 @@
       <input type="submit" value="Làm lại" id="clearbutton" class="btn btn-reset" onclick="window.emailLog ? clearCanvas(canvas,ctx) : alert('Login, please')">
       <input type="submit" value="Tạo bộ mới" id="resetbutton" class="btn btn-new" onclick="window.emailLog ? resetData() : alert('Login, please')">
     </div>
-  </div>
-  <div class="g-signin2 custom-google-btn" data-onsuccess="onSignIn"></div>
+  </div> 
+  <div class="g-signin2" data-width="400" data-height="100" data-theme="dark" data-longtitle="true" data-onsuccess="onSignIn"></div>
 
   <!--background-image: url('https://3.bp.blogspot.com/_jFM-Fd8NDFE/TLhmRK1h8AI/AAAAAAAAKcU/NKNPe051PbA/s1600/OldCanvas-5.jpg');-->
   <!-- partial -->
