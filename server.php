@@ -1,4 +1,5 @@
 <?php
+	header('Access-Control-Allow-Origin: *');
 	// requires php5
 	define('UPLOAD_DIR', 'images/');
 	$img = $_POST['imgBase64'];

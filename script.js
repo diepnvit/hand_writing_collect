@@ -248,9 +248,11 @@ function downloadImg() {
         fileNameCreate = window.obj[window.indexStr - 1].name + '_' + window.obj[window.indexStr - 1].id
         break;
     }
+    readTextFile('./url.txt');
+    console.log(window.contentFile);
     $.ajax({
       type: "POST",
-      url: "server.php",
+      url: window.contentFile + "/server.php",
       data: {
         imgBase64: img,
         fileName: fileNameCreate,
@@ -315,4 +317,22 @@ function onSignIn(googleUser) {
   // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   window.emailLog = profile.getEmail();
   $('.custom-google-btn').css({ 'display': 'none' });
+}
+
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                window.contentFile = allText;
+            }
+        }
+    }
+    rawFile.send(null);
 }
